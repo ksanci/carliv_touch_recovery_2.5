@@ -1568,7 +1568,7 @@ void show_nandroid_menu()
                             NULL
     };
     
-    if(nandroid_get_default_backup_format() == NANDROID_BACKUP_FORMAT_DUP) 
+   // if(nandroid_get_default_backup_format() == NANDROID_BACKUP_FORMAT_DUP) 
         list[6] = "Free Unused Old Data";
 
     char *other_sd = NULL;
@@ -1653,6 +1653,7 @@ void show_nandroid_menu()
 }
 
 void partition_sdcard(const char* volume) {
+  ui_print("PARTITION: %s\n", volume);
     if (!can_partition(volume)) {
         ui_print("Can't partition device: %s\n", volume);
         return;
@@ -1983,21 +1984,21 @@ void show_advanced_menu()
                             "show log",
                             "Toggle touch control",
                             "Instructions for touch control",                            
+                            "partition internal sdcard",
                             "partition sdcard",
                             "partition external sdcard",
-                            "partition internal sdcard",
                             NULL
     };
     
-    if (!can_partition("/sdcard")) {
+      if (!can_partition("/emmc")) { 
         list[5] = NULL;
     }
-    if (!can_partition("/external_sd")) {
+      if (!can_partition("/sdcard")) {
         list[6] = NULL;
     }
-    if (!can_partition("/emmc")) {
+      if (!can_partition("/external_sd")) {
         list[7] = NULL;
-    }
+    } 
 
     for (;;)
     {
@@ -2059,13 +2060,13 @@ void show_advanced_menu()
                 ui_print("\n");
                 break;  
             case 5:
-                partition_sdcard("/sdcard");
+	      partition_sdcard("/emmc");
                 break;
             case 6:
-                partition_sdcard("/external_sd");
+                partition_sdcard("/sdcard");
                 break;
             case 7:
-                partition_sdcard("/emmc");
+                partition_sdcard("/external_sd");
                 break;
         }
     }
