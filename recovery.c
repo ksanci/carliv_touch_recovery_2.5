@@ -899,7 +899,8 @@ main(int argc, char **argv) {
     device_ui_init(&ui_parameters);
     ui_init();
     ui_print(EXPAND(RECOVERY_VERSION_INFO)"\n");
-//  ui_print("Compiled by carliv@xda\n");
+    ui_print("Modified and compiled\n");
+    ui_print("by ksanci\n");
 
     load_volume_table();
     process_volumes();
