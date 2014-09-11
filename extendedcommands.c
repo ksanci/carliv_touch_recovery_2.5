@@ -1924,9 +1924,9 @@ void show_carliv_menu()
                              NULL
     };
     
-    if (volume_for_path("/nvram") != NULL) {
+   /* if (volume_for_path("/nvram") != NULL) {
         list[3] = "Nvram Backup/Restore";
-    }
+    }*/
 
     for (;;)
     {
@@ -1975,9 +1975,9 @@ void show_carliv_menu()
                 ui_print("Thank you all!\n");
                 ui_print("\n");
                 break;
-             case 3:
+            /* case 3:
                 show_nvram_menu();
-                break;
+                break;*/
 		
 	     default:
 	     return;
