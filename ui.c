@@ -1241,7 +1241,7 @@ int ui_start_menu(char** headers, char** items, int initial_selection) {
 	            menu[i][MENU_MAX_COLS-1] = '\0';
         }
 
-		gShowBackButton = 0;
+		//gShowBackButton = 0;
         if (gShowBackButton && !ui_root_menu) {
             strcpy(menu[i], " <<<- Go Back ");
             ++i;
