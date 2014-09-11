@@ -1450,21 +1450,22 @@ static void choose_default_backup_format() {
 
     char **list;
     char* list_tar_default[] = { "tar (default)",
-                                 "dup",
+                               //  "dup",
                                  "tar + gzip",
                                  NULL };
-    char* list_dup_default[] = { "tar",
+   /* char* list_dup_default[] = { "tar",
                                  "dup (default)",
                                  "tar + gzip",
-                                 NULL };
+                                 NULL }; */
     char* list_tgz_default[] = { "tar",
-                                 "dup",
+                             //    "dup",
                                  "tar + gzip (default)",
                                  NULL };
 
-    if (fmt == NANDROID_BACKUP_FORMAT_DUP) {
+   /* if (fmt == NANDROID_BACKUP_FORMAT_DUP) {
         list = list_dup_default;
-    } else if (fmt == NANDROID_BACKUP_FORMAT_TGZ) {
+    } else */
+      if (fmt == NANDROID_BACKUP_FORMAT_TGZ) {
         list = list_tgz_default;
     } else {
         list = list_tar_default;
@@ -1476,11 +1477,11 @@ static void choose_default_backup_format() {
             write_string_to_file(NANDROID_BACKUP_FORMAT_FILE, "tar");
             ui_print("Default backup format set to tar.\n");
             break;
-        case 1:
+      /*  case 1:
             write_string_to_file(NANDROID_BACKUP_FORMAT_FILE, "dup");
             ui_print("Default backup format set to dedupe.\n");
-            break;
-        case 2:
+            break; */
+        case 1:
             write_string_to_file(NANDROID_BACKUP_FORMAT_FILE, "tgz");
             ui_print("Default backup format set to tar + gzip.\n");
             break;
@@ -1576,18 +1577,18 @@ void show_nandroid_menu()
     };
     
    // if(nandroid_get_default_backup_format() == NANDROID_BACKUP_FORMAT_DUP) 
-        list[6] = "Free Unused Old Data";
+   //     list[6] = "Free Unused Old Data";
 
     char *other_sd = NULL;
     if(EXTRA_SDCARD == EMMC) {
-		list[7] = "Backup to internal sdcard";
-		list[8] = "Restore from internal sdcard";
-		list[9] = "Delete from internal sdcard";
+		list[6] = "Backup to internal sdcard";
+		list[7] = "Restore from internal sdcard";
+		list[8] = "Delete from internal sdcard";
 		other_sd = "/emmc";
 	} else if (EXTRA_SDCARD == EXTERNALSD) {
-		list[7] = "Backup to external sdcard";
-		list[8] = "Restore from external sdcard";
-		list[9] = "Delete from external sdcard";
+		list[6] = "Backup to external sdcard";
+		list[7] = "Restore from external sdcard";
+		list[8] = "Delete from external sdcard";
 		other_sd = "/external_sd";
     }
 #ifdef RECOVERY_EXTEND_NANDROID_MENU
@@ -1628,22 +1629,22 @@ void show_nandroid_menu()
             case 5:
                 toggle_md5_check();
                 break;
+           // case 6:
+           //     run_dedupe_gc(other_sd);
+           //     break;
             case 6:
-                run_dedupe_gc(other_sd);
-                break;
-            case 7:
                 {
 					nandroid_generate_timestamp_path(backup_path, 1);
                     nandroid_backup(backup_path);
 					break;
                 }
-            case 8:
+            case 7:
                 if (other_sd != NULL) {
 					nandroid_get_backup_path(backup_path, 1);
                     show_nandroid_restore_menu(backup_path);
                 }
                 break;
-            case 9:
+            case 8:
                 if (other_sd != NULL) {
 					nandroid_get_backup_path(backup_path, 1);
                     show_nandroid_delete_menu(backup_path);
