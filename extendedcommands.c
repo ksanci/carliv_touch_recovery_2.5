@@ -2000,19 +2000,19 @@ void show_advanced_menu()
                             "Instructions for touch control",                            
                             "partition internal sdcard",
                             "partition sdcard",
-                            "partition external sdcard",
+                            // "partition external sdcard",
                             NULL
     };
     
-      if (!can_partition("/emmc")) { 
+    /*  if (!can_partition("/emmc")) { 
         list[5] = NULL;
-    }
-      if (!can_partition("/sdcard")) {
+    }*/
+    /*  if (!can_partition("/sdcard")) {
         list[6] = NULL;
-    }
-      if (!can_partition("/external_sd")) {
+    } */
+    /*  if (!can_partition("/external_sd")) {
         list[7] = NULL;
-    } 
+    } */
 
     for (;;)
     {
@@ -2070,7 +2070,7 @@ void show_advanced_menu()
                 break;   
             case 4:
                 ui_print("=================================\n");
-                ui_print("For full touch control, tap on desired menu button. For Go back swipe to the left. For Scroll UP and Scroll Down in long menu pages, Swipe to Right for Page Down, and Swipe to Left for Page UP, and on top of the menu Swipe Left for Go Back.\n");
+                ui_print("For full touch control, tap on desired menu button. For Go back swipe to the left or select <-- BACK. For Scroll UP and Scroll Down in long menu pages, Swipe to Right for Page Down, and Swipe to Left for Page UP, and on top of the menu Swipe Left for Go Back.\n");
                 ui_print("\n");
                 break;  
             case 5:
@@ -2079,9 +2079,11 @@ void show_advanced_menu()
             case 6:
                 partition_sdcard("/sdcard");
                 break;
-            case 7:
+           /* case 7:
                 partition_sdcard("/external_sd");
-                break;
+                break; */
+	    default:
+	        return;
         }
     }
 }
