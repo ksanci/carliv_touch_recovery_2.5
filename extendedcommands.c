@@ -145,7 +145,7 @@ void show_power_menu() {
 	{
 		int chosen_item = get_menu_selection(headers, list, 0, 0);
 		if (chosen_item == GO_BACK)
-            break;
+                return; //break;
 		switch (chosen_item) {	
 			case POWER_ITEM_RECOVERY:
 			{
@@ -169,6 +169,8 @@ void show_power_menu() {
                 ui_print("Shutting down...\n");
                 reboot_main_system(ANDROID_RB_POWEROFF, 0, 0);
                 break;
+		default:
+                return;
             }
 		}
 	}
@@ -290,6 +292,8 @@ void show_install_update_menu()
     for (;;)
     {
         int chosen_item = get_menu_selection(headers, install_menu_items, 0, 0);
+	if (chosen_item == GO_BACK)
+               return;
         switch (chosen_item)
         {
             case ITEM_SIG_CHECK:
@@ -314,8 +318,8 @@ void show_install_update_menu()
                 if (other_sd != NULL)
                     show_choose_zip_menu(other_sd);
                 break;
-            default:
-                return;
+           // default:
+             //   return;
         }
 
     }
@@ -339,8 +343,8 @@ void show_wipe_menu()
     for (;;)
     {
 		int chosen_item = get_menu_selection(headers, list, 0, 0);
-        if (chosen_item == GO_BACK)
-            break;
+               if (chosen_item == GO_BACK)
+               return; // break;
 		switch (chosen_item)
         	{
              case 0:
@@ -354,7 +358,9 @@ void show_wipe_menu()
              case 2:
                 wipe_dalvik_cache(ui_text_visible());
                 if (!ui_text_visible()) return;
-                break;   
+                break;
+		default:
+                return;
         }
     }
     
@@ -1234,7 +1240,7 @@ void show_partition_menu()
 
         int chosen_item = get_menu_selection(headers, &options, 0, 0);
         if (chosen_item == GO_BACK)
-            break;
+          return; // break;
         if (chosen_item == (mountable_volumes+formatable_volumes)) {
             if (!is_data_media()) {
                 show_mount_usb_storage_menu();
@@ -1282,6 +1288,7 @@ void show_partition_menu()
             else
                 ui_print("Done.\n");
         }
+        else return;
     }
 
     free(mount_menu);
@@ -1512,7 +1519,7 @@ void show_nandroid_advanced_menu()
     for (;;) {
         int chosen_item = get_filtered_menu_selection(headers, list, 0, 0, sizeof(list) / sizeof(char*));
         if (chosen_item == GO_BACK)
-            break;
+        return; // break;
 		switch (chosen_item)
         	{
 			char backup_path[PATH_MAX];	
@@ -1590,7 +1597,7 @@ void show_nandroid_menu()
     for (;;) {
         int chosen_item = get_filtered_menu_selection(headers, list, 0, 0, sizeof(list) / sizeof(char*));
         if (chosen_item == GO_BACK)
-            break;
+         return; // break;
         switch (chosen_item)
         {
 			char backup_path[PATH_MAX];
@@ -1647,7 +1654,7 @@ void show_nandroid_menu()
 #ifdef RECOVERY_EXTEND_NANDROID_MENU
                 handle_nandroid_menu(10, chosen_item);
 #endif
-                break;
+               return; // break;
         }
     }
 }
@@ -1748,10 +1755,10 @@ void show_rainbow_menu()
     {
 		int chosen_item = get_menu_selection(headers, list, 0, 0);
         if (chosen_item == GO_BACK)
-            break;
+            return; //break;
 		switch (chosen_item)
         	{
-			case 0:
+	     case 0:
                 ui_set_rainbow_mode(1);
                 ui_print("Rainbow mode enabled!\n");
                 break;  
@@ -1759,6 +1766,9 @@ void show_rainbow_menu()
                 ui_set_rainbow_mode(0);
                 ui_print("Rainbow mode disabled\n");
                 break;
+	    
+	     default:
+	       return;
         }
     }
 }
@@ -1792,7 +1802,7 @@ void show_nvram_menu()
     for (;;) {
         int chosen_item = get_filtered_menu_selection(headers, list, 0, 0, sizeof(list) / sizeof(char*));
         if (chosen_item == GO_BACK)
-            break;
+         return; // break;
 		switch (chosen_item)
         	{
 			char backup_path[PATH_MAX];	
@@ -1817,7 +1827,7 @@ void show_nvram_menu()
                 }
                 break;
             default:
-                break;    
+               return; // break;    
           }
     }
     
@@ -1870,7 +1880,7 @@ static void custom_aroma_menu() {
         //header function so that "Toggle menu" doesn't reset to main menu on action selected
         int chosen_item = get_filtered_menu_selection(headers, list, 0, 0, sizeof(list) / sizeof(char*));
         if (chosen_item == GO_BACK)
-            break;
+          return; //  break;
         switch (chosen_item)
         {
             case 0:
@@ -1921,7 +1931,7 @@ void show_carliv_menu()
     {
 		int chosen_item = get_menu_selection(headers, list, 0, 0);
         if (chosen_item == GO_BACK)
-            break;
+           return; // break;
 		switch (chosen_item)
         	{
 			case 0:
@@ -1966,7 +1976,10 @@ void show_carliv_menu()
                 break;
              case 3:
                 show_nvram_menu();
-                break;    
+                break;
+		
+	     default:
+	     return;
         }
     }
     
@@ -2004,7 +2017,7 @@ void show_advanced_menu()
     {
         int chosen_item = get_filtered_menu_selection(headers, list, 0, 0, sizeof(list) / sizeof(char*));
         if (chosen_item == GO_BACK)
-            break;
+           return; // break;
         switch (chosen_item)
         {
             case 0:
