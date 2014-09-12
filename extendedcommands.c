@@ -293,7 +293,7 @@ void show_install_update_menu()
     {
         int chosen_item = get_menu_selection(headers, install_menu_items, 0, 0);
 	if (chosen_item == GO_BACK)
-               return;
+               break;
         switch (chosen_item)
         {
             case ITEM_SIG_CHECK:
@@ -318,8 +318,8 @@ void show_install_update_menu()
                 if (other_sd != NULL)
                     show_choose_zip_menu(other_sd);
                 break;
-           // default:
-             //   return;
+            default:
+                return;
         }
 
     }
@@ -2070,7 +2070,7 @@ void show_advanced_menu()
                 break;   
             case 4:
                 ui_print("=================================\n");
-                ui_print("For full touch control, tap on desired menu button. For Go back swipe to the left or select <-- BACK. For Scroll UP and Scroll Down in long menu pages, Swipe to Right for Page Down, and Swipe to Left for Page UP, and on top of the menu Swipe Left for Go Back.\n");
+                ui_print("For full touch control, tap on desired menu button. For Go back swipe to the left. For Scroll UP and Scroll Down in long menu pages, Swipe to Right for Page Down, and Swipe to Left for Page UP, and on top of the menu Swipe Left for Go Back.\n");
                 ui_print("\n");
                 break;  
             case 5:
