@@ -1303,6 +1303,7 @@ void show_nandroid_advanced_backup_menu(const char *path, int other_sd)
 	}
 
 	static char* advancedheaders[] = { "Choose the partitions to backup.",
+	                               "",
 					NULL
     };
     
