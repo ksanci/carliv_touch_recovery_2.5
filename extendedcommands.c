@@ -2001,7 +2001,7 @@ void show_advanced_menu()
                             "Instructions for touch control",                            
                             "partition internal sdcard",
                             "partition sdcard",
-                            // "partition external sdcard",
+                            "partition external sdcard",
                             NULL
     };
     
@@ -2011,9 +2011,9 @@ void show_advanced_menu()
     /*  if (!can_partition("/sdcard")) {
         list[6] = NULL;
     } */
-    /*  if (!can_partition("/external_sd")) {
+    if (!can_partition("/external_sd")) {
         list[7] = NULL;
-    } */
+    } 
 
     for (;;)
     {
@@ -2080,9 +2080,9 @@ void show_advanced_menu()
             case 6:
                 partition_sdcard("/sdcard");
                 break;
-           /* case 7:
+            case 7:
                 partition_sdcard("/external_sd");
-                break; */
+                break;
 	    default:
 	        return;
         }
