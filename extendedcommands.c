@@ -178,8 +178,8 @@ void show_power_menu() {
 
 void toggle_touch_control_menu() 
 {
-    if (ensure_path_mounted("/sdcard/") != 0) {
-        LOGE ("Can't mount sdcard\n");
+    if (ensure_path_mounted("/emmc/") != 0) {
+        LOGE ("Can't mount internal sdcard\n");
         return;
     }
 
@@ -194,11 +194,11 @@ void toggle_touch_control_menu()
     };
     
     struct stat info;
-    if (0 != stat("/sdcard/clockworkmod/.full_nav", &info))
+    if (0 != stat("/emmc/clockworkmod/.full_nav", &info))
     {
     	list[0] = "Touch control - ON";
     }
-    else if (0 == stat("/sdcard/clockworkmod/.full_nav", &info))
+    else if (0 == stat("/emmc/clockworkmod/.full_nav", &info))
     {
     	list[0] = "Touch control - OFF";
     }
@@ -208,14 +208,14 @@ void toggle_touch_control_menu()
     {
         case 0:
             {
-            	if (0 != stat("/sdcard/clockworkmod/.full_nav", &info))
+            	if (0 != stat("/emmc/clockworkmod/.full_nav", &info))
             	{
-		    	__system("touch /sdcard/clockworkmod/.full_nav");
+		    	__system("touch /emmc/clockworkmod/.full_nav");
 		    	ui_print("Full touch control disabled\n");
 				}
-				else if (0 == stat("/sdcard/clockworkmod/.full_nav", &info))
+				else if (0 == stat("/emmc/clockworkmod/.full_nav", &info))
 				{
-				    	__system("rm /sdcard/clockworkmod/.full_nav");
+				    	__system("rm /emmc/clockworkmod/.full_nav");
 				    	ui_print("Full touch control enabled\n");
 				    	ui_print("Click on buttons on screen for selection.\n");
 				    	ui_print("Swipe left for Go Back.\n");
@@ -228,7 +228,7 @@ void toggle_touch_control_menu()
             break;
         case 1:
             {
-		    	__system("touch /sdcard/clockworkmod/.full_nav");
+		    	__system("touch /emmc/clockworkmod/.full_nav");
 		    	ui_print("Full touch control disabled\n");
 		    	ui_print("Use Volume/Power keys to navigate.\n");
 			toggle_touch_control_menu();
@@ -286,7 +286,7 @@ void show_install_update_menu()
     } 
     else if (EXTRA_SDCARD == EXTERNALSD) {
 		install_menu_items[5] = "choose zip from external sdcard";
-        other_sd = "/external_sd/";
+        other_sd = "/sd_ext/";
     }
     
     for (;;)
@@ -652,8 +652,8 @@ int show_choose_delete_menu()
         CHOOSE_DELETE_MENU_ITEMS[1]="View and delete backups on /emmc";
         other_sd = "/emmc";
     } else if (EXTRA_SDCARD == EXTERNALSD) {
-        CHOOSE_DELETE_MENU_ITEMS[1]="View and delete backups on /external_sd";
-        other_sd = "/external_sd";
+        CHOOSE_DELETE_MENU_ITEMS[1]="View and delete backups on /sd_ext";
+        other_sd = "/sd_ext";
     }
 
     for (;;) {
@@ -747,7 +747,7 @@ int show_lowspace_menu(int i, const char* backup_path)
                             other_sd = "/emmc";
                             break;
                         case EXTERNALSD:
-                            other_sd = "/external_sd";
+                            other_sd = "/sd_ext";
                             break;
                     }
                 }
@@ -894,7 +894,7 @@ void show_mount_usb_storage_menu()
     Volume* volumes[MAX_NUM_USB_VOLUMES] = {
         volume_for_path("/sdcard"),
         volume_for_path("/emmc"),
-        volume_for_path("/external_sd")
+        volume_for_path("/sd_ext")
     };
 
     // Enable USB storage
@@ -1512,7 +1512,7 @@ void show_nandroid_advanced_menu()
     else if (EXTRA_SDCARD == EXTERNALSD) {        
         list[2] = "Advanced backup to external_sd";
         list[3] = "Advanced restore from external_sd";
-        other_sd = "/external_sd";
+        other_sd = "/sd_ext";
     }	
 #ifdef RECOVERY_EXTEND_NANDROID_MENU
     extend_nandroid_menu(list, 4, sizeof(list) / sizeof(char*));
@@ -1590,7 +1590,7 @@ void show_nandroid_menu()
 		list[6] = "Backup to external sdcard";
 		list[7] = "Restore from external sdcard";
 		list[8] = "Delete from external sdcard";
-		other_sd = "/external_sd";
+		other_sd = "/sd_ext";
     }
 #ifdef RECOVERY_EXTEND_NANDROID_MENU
     extend_nandroid_menu(list, 10, sizeof(list) / sizeof(char*));
@@ -1798,7 +1798,7 @@ void show_nvram_menu()
     else if (EXTRA_SDCARD == EXTERNALSD) {        
         list[2] = "Backup Nvram to external_sd";
         list[3] = "Restore Nvram from external_sd";
-        other_sd = "/external_sd";
+        other_sd = "/sd_ext";
     }	
 
     for (;;) {
@@ -1873,8 +1873,8 @@ static void custom_aroma_menu() {
     if (volume_for_path("/emmc") != NULL) {
         other_sd = "/emmc/";
         list[1] = "Search Internal sdcard";
-    } else if (volume_for_path("/external_sd") != NULL) {
-        other_sd = "/external_sd/";
+    } else if (volume_for_path("/sd_ext") != NULL) {
+        other_sd = "/sd_ext/";
         list[1] = "Search External sdcard";
     }
 
@@ -1941,14 +1941,14 @@ void show_carliv_menu()
                 if (volume_for_path("/sdcard") != NULL) {
                     ensure_path_mounted("/sdcard");
                 }
-                if (volume_for_path("/external_sd") != NULL) {
-                    ensure_path_mounted("/external_sd");
+                if (volume_for_path("/sd_ext") != NULL) {
+                    ensure_path_mounted("/sd_ext");
                 } else if (volume_for_path("/emmc") != NULL) {
                     ensure_path_mounted("/emmc");
                 }
-                //look for clockworkmod/.aromafm/aromafm.zip in /external_sd, then /sdcard and finally /emmc
-                if (volume_for_path("/external_sd") != NULL) {
-                    if (default_aromafm("/external_sd")) {
+                //look for clockworkmod/.aromafm/aromafm.zip in /sd_ext, then /sdcard and finally /emmc
+                if (volume_for_path("/sd_ext") != NULL) {
+                    if (default_aromafm("/sd_ext")) {
                         break;
                     }
                 }
@@ -1999,21 +1999,21 @@ void show_advanced_menu()
                             "show log",
                             "Toggle touch control",
                             "Instructions for touch control",                            
-                            "partition internal sdcard",
+                           // "partition internal sdcard",
                             "partition sdcard",
-                            "partition external sdcard",
+                           // "partition external sdcard",
                             NULL
     };
     
-    /*  if (!can_partition("/emmc")) { 
+   /* if (!can_partition("/emmc")) { 
         list[5] = NULL;
     }*/
-    /*  if (!can_partition("/sdcard")) {
-        list[6] = NULL;
-    } */
-    if (!can_partition("/external_sd")) {
+    if (!can_partition("/sdcard") || 0 != ensure_path_mounted("/sdcard")) {
+        list[5] = NULL;
+    }
+    /*if (!can_partition("/sd_ext")) {
         list[7] = NULL;
-    } 
+    } */
 
     for (;;)
     {
@@ -2074,14 +2074,14 @@ void show_advanced_menu()
                 ui_print("For full touch control, tap on desired menu button. For Go back swipe to the left. For Scroll UP and Scroll Down in long menu pages, Swipe to Right for Page Down, and Swipe to Left for Page UP, and on top of the menu Swipe Left for Go Back.\n");
                 ui_print("\n");
                 break;  
-            case 5:
+            /*case 5:
 	      partition_sdcard("/emmc");
-                break;
-            case 6:
+                break;*/
+            case 5:
                 partition_sdcard("/sdcard");
                 break;
             case 7:
-                partition_sdcard("/external_sd");
+                partition_sdcard("/sd_ext");
                 break;
 	    default:
 	        return;
@@ -2217,11 +2217,11 @@ void handle_failure(int ret)
         }
         strcpy(tmp, "/emmc/clockworkmod" );
     } else if(EXTRA_SDCARD == EXTERNALSD) {
-        if(0 != ensure_path_mounted("/external_sd")) {
-            ui_print("Can't mount /external_sd.\n");
+        if(0 != ensure_path_mounted("/sd_ext")) {
+            ui_print("Can't mount /sd_ext.\n");
             return -1;
         }
-        strcpy(tmp, "/external_sd/clockworkmod" );
+        strcpy(tmp, "/sd_ext/clockworkmod" );
     } else {
         if(0 != ensure_path_mounted("/sdcard")) {
             ui_print("Can't mount /sdcard.\n");
