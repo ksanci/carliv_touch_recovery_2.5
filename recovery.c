@@ -741,7 +741,7 @@ prompt_and_wait() {
         // device-specific code may take some action here.  It may
         // return one of the core actions handled in the switch
         // statement below.
-        chosen_item = device_perform_action(chosen_item);
+	chosen_item = device_perform_action(chosen_item);
 
         int status;
         switch (chosen_item) {
@@ -901,9 +901,16 @@ main(int argc, char **argv) {
     ui_print(EXPAND(RECOVERY_VERSION_INFO)"\n");
     ui_print("Modified and compiled\n");
     ui_print("by ksanci\n");
+    ui_print("W450 v1\n");
 
     load_volume_table();
     process_volumes();
+    
+    char tmp[PATH_MAX];
+    strcpy(tmp, "/emmc/clockworkmod" );
+    mkdir(tmp, S_IRWXU | S_IRWXG | S_IRWXO); //toch flag on /emmc/clockworkmod, make it
+    __system("rm /emmc/clockworkmod/.full_nav"); //enable touch control
+    
     LOGI("Processing arguments.\n");
     get_args(&argc, &argv);
 
@@ -1020,7 +1027,7 @@ main(int argc, char **argv) {
         
         if (volume_for_path("/emmc") != NULL) {
             EXTRA_SDCARD = EMMC;
-        } else if (volume_for_path("/external_sd") != NULL) {
+        } else if (volume_for_path("/sd_ext") != NULL) {
             EXTRA_SDCARD = EXTERNALSD;
         }
          
