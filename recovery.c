@@ -906,10 +906,7 @@ main(int argc, char **argv) {
     load_volume_table();
     process_volumes();
     
-    char tmp[PATH_MAX];
-    strcpy(tmp, "/emmc/clockworkmod" );
-    mkdir(tmp, S_IRWXU | S_IRWXG | S_IRWXO); //toch flag on /emmc/clockworkmod, make it
-    __system("rm /emmc/clockworkmod/.full_nav"); //enable touch control
+   __system("rm /emmc/clockworkmod/.full_nav"); //enable touch control
     
     LOGI("Processing arguments.\n");
     get_args(&argc, &argv);
