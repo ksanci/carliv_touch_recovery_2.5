@@ -193,6 +193,10 @@ void toggle_touch_control_menu()
                             NULL
     };
     
+    char tmp[PATH_MAX];
+    strcpy(tmp, "/emmc/clockworkmod" );
+    mkdir(tmp, S_IRWXU | S_IRWXG | S_IRWXO); //touch flag on /emmc/clockworkmod, make it
+    
     struct stat info;
     if (0 != stat("/emmc/clockworkmod/.full_nav", &info))
     {
@@ -2290,7 +2294,7 @@ int verify_root_and_recovery() {
             if (st.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)) {
                 ui_show_text(1);
                 ret = 1;
-                if (confirm_selection("ROM may flash stock recovery on boot. Fix?", "Yes - Disable recovery flash")) {
+                if (confirm_selection("ROM may flash stock\n recovery on boot. Fix?", "Yes - Disable recovery flash")) {
                     __system("chmod -x /system/etc/install-recovery.sh");
                 }
             }
